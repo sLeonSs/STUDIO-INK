@@ -1,0 +1,185 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Xem thử trên thiết bị · STUDIO INK</title>
+  <link rel="icon" href="../assets/favicon.png">
+  <!--
+    Trang xem thử dành cho chủ shop, không phải trang bán hàng: hiện web trong khung iPhone,
+    Samsung, iPad... đúng kích thước màn hình thật để xem bố cục trên laptop.
+    Mở qua máy chủ (F5 trong VS Code): http://localhost:8080/tools/xem-thu-thiet-bi.html
+  -->
+  <style>
+    :root { color-scheme: light; --ink: #111; --muted: #777; }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: #ecece9;
+      color: var(--ink);
+      font: 14px/1.45 -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+    button { font: inherit; color: inherit; cursor: pointer; }
+    .bar {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px 24px;
+      padding: 14px 24px;
+    }
+    h1 { margin: 0; font: italic 400 24px/1.1 Georgia, "Times New Roman", serif; }
+    .hint { margin: 0; color: var(--muted); font-size: 13px; }
+    .chips { display: flex; flex-wrap: wrap; gap: 6px; }
+    .chips button {
+      height: 30px;
+      padding: 0 14px;
+      border: 1px solid #c9c9c4;
+      border-radius: 999px;
+      background: transparent;
+      font-size: 12px;
+    }
+    .chips button[aria-pressed="true"] { border-color: var(--ink); background: var(--ink); color: #fff; }
+    .lab {
+      display: flex;
+      align-items: flex-start;
+      gap: 36px;
+      padding: 6px 24px 24px;
+      overflow-x: auto;
+    }
+    /* căn giữa bằng lề tự động: nếu hàng máy rộng hơn cửa sổ thì vẫn cuộn được tới máy đầu tiên */
+    .lab > :first-child { margin-left: auto; }
+    .lab > :last-child { margin-right: auto; }
+    /* bề ngang khung máy do layout() đặt; chú thích tự xuống dòng theo bề ngang đó */
+    figure { flex: none; display: grid; justify-items: center; gap: 10px; margin: 0; }
+    /* viền máy; màn hình bên trong được thu nhỏ bằng transform nên web vẫn "thấy" đúng kích thước thật */
+    .device {
+      overflow: hidden;
+      border: 10px solid #151515;
+      border-radius: 42px;
+      background: #fff;
+      box-shadow: 0 24px 50px -22px rgba(0, 0, 0, .5), 0 0 0 1px #000;
+    }
+    .device--tablet { border-width: 14px; border-radius: 26px; }
+    .device.is-landscape { border-radius: 34px; }
+    .device iframe { display: block; border: 0; transform-origin: 0 0; background: #fff; }
+    figcaption { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 4px 12px; max-width: 100%; font-size: 12px; text-align: center; }
+    figcaption strong { font-weight: 600; }
+    figcaption span { color: var(--muted); font-variant-numeric: tabular-nums; }
+    figcaption button { padding: 4px 2px; border: 0; background: none; text-decoration: underline; text-underline-offset: 3px; }
+  </style>
+</head>
+<body>
+  <div class="bar">
+    <div>
+      <h1>Xem thử trên thiết bị</h1>
+      <p class="hint">Bấm, kéo giá treo, cuộn bên trong từng máy như trên điện thoại thật. Màn hình được thu nhỏ cho vừa laptop nhưng bố cục đúng kích thước thật.</p>
+    </div>
+    <div class="chips" id="chips" role="group" aria-label="Chọn thiết bị"></div>
+  </div>
+  <div class="lab" id="lab"></div>
+
+  <script>
+    (function () {
+      'use strict';
+
+      const SITE = '../index.html';
+      // Kích thước màn hình (điểm ảnh CSS) của các máy phổ biến
+      const DEVICES = [
+        { id: 'se', name: 'iPhone SE', w: 375, h: 667, kind: 'phone', on: false },
+        { id: 'ip15', name: 'iPhone 15', w: 390, h: 844, kind: 'phone', on: true },
+        { id: 'max', name: 'iPhone 15 Pro Max', w: 430, h: 932, kind: 'phone', on: false },
+        { id: 's23', name: 'Samsung Galaxy S23', w: 360, h: 780, kind: 'phone', on: true },
+        { id: 'a54', name: 'Samsung Galaxy A54', w: 412, h: 915, kind: 'phone', on: false },
+        { id: 'ipad', name: 'iPad', w: 768, h: 1024, kind: 'tablet', on: true },
+      ];
+      const lab = document.getElementById('lab');
+      const chips = document.getElementById('chips');
+
+      chips.innerHTML = DEVICES.map((d) => `<button type="button" data-id="${d.id}" aria-pressed="${d.on}">${d.name}</button>`).join('');
+      chips.addEventListener('click', (e) => {
+        const btn = e.target.closest('button');
+        if (!btn) return;
+        const d = DEVICES.find((x) => x.id === btn.dataset.id);
+        d.on = !d.on;
+        btn.setAttribute('aria-pressed', String(d.on));
+        render();
+      });
+
+      function render() {
+        lab.innerHTML = '';
+        DEVICES.filter((d) => d.on).forEach((d) => {
+          const fig = document.createElement('figure');
+          fig.dataset.id = d.id;
+          fig.innerHTML = `
+            <div class="device device--${d.kind}"><iframe title="Web trên ${d.name}" src="${SITE}"></iframe></div>
+            <figcaption>
+              <strong>${d.name}</strong><span class="size"></span>
+              <button type="button" data-act="rotate">Xoay màn hình</button>
+              <button type="button" data-act="reload">Tải lại</button>
+            </figcaption>`;
+          const frame = fig.querySelector('iframe');
+          // Ẩn thanh cuộn trong khung cho giống điện thoại (chỉ được khi cùng máy chủ)
+          frame.addEventListener('load', () => {
+            try {
+              const style = frame.contentDocument.createElement('style');
+              style.textContent = 'html{scrollbar-width:none}::-webkit-scrollbar{display:none}';
+              frame.contentDocument.head.appendChild(style);
+            } catch (err) { /* mở bằng file:// thì bỏ qua */ }
+          });
+          d.el = fig;
+          lab.appendChild(fig);
+        });
+        layout();
+      }
+
+      // Mỗi máy cao vừa cửa sổ; nếu cả hàng rộng hơn cửa sổ thì thu nhỏ đều tất cả.
+      // Viền máy (bezel) giữ nguyên độ dày nên được trừ ra trước khi tính tỉ lệ.
+      function layout() {
+        const shown = DEVICES.filter((d) => d.on && d.el);
+        if (!shown.length) return;
+        const top = lab.getBoundingClientRect().top;
+        const availH = Math.max(320, window.innerHeight - top - 84); // chừa chỗ cho chú thích
+        const sizes = shown.map((d) => {
+          const [w, h] = d.landscape ? [d.h, d.w] : [d.w, d.h];
+          const bezel = d.kind === 'tablet' ? 28 : 20;
+          return { d, w, h, bezel, s: Math.min(1, (availH - bezel) / h) };
+        });
+        const availW = lab.clientWidth - 48 - 36 * (shown.length - 1);
+        const screensW = sizes.reduce((sum, x) => sum + x.w * x.s, 0);
+        const bezelsW = sizes.reduce((sum, x) => sum + x.bezel, 0);
+        const k = Math.min(1, Math.max(0.25, (availW - bezelsW) / screensW));
+        sizes.forEach(({ d, w, h, bezel, s }) => {
+          const scale = s * k;
+          const boxW = Math.floor(w * scale) + bezel;
+          const box = d.el.querySelector('.device');
+          const frame = d.el.querySelector('iframe');
+          box.classList.toggle('is-landscape', Boolean(d.landscape));
+          box.style.width = `${boxW}px`;
+          box.style.height = `${Math.floor(h * scale) + bezel}px`;
+          d.el.style.width = `${boxW}px`;
+          frame.style.width = `${w}px`;
+          frame.style.height = `${h}px`;
+          frame.style.transform = `scale(${scale})`;
+          d.el.querySelector('.size').textContent = `${w} × ${h}${scale < 0.999 ? ` · hiển thị ${Math.round(scale * 100)}%` : ''}`;
+        });
+      }
+
+      lab.addEventListener('click', (e) => {
+        const btn = e.target.closest('[data-act]');
+        if (!btn) return;
+        const d = DEVICES.find((x) => x.id === btn.closest('figure').dataset.id);
+        if (btn.dataset.act === 'rotate') {
+          d.landscape = !d.landscape;
+          layout();
+        } else {
+          d.el.querySelector('iframe').contentWindow.location.reload();
+        }
+      });
+      window.addEventListener('resize', layout);
+      render();
+    })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,10 @@
+# Netlify đọc file này khi web được đưa lên (máy chủ chạy thử trên Mac thì bỏ qua).
+# HTML, CSS, JS: Netlify mặc định luôn kiểm tra bản mới, nên sửa web xong khách thấy ngay.
+/*
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+
+# Ảnh: cho trình duyệt nhớ 1 ngày, khách quay lại mở nhanh và đỡ tốn dung lượng.
+# (thay ảnh cùng tên thì khách cũ có thể thấy ảnh cũ tối đa 1 ngày)
+/assets/*
+  Cache-Control: public, max-age=86400

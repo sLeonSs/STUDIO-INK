@@ -1,0 +1,255 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>STUDIO INK · Lót chuột</title>
+  <meta name="description" content="STUDIO INK – lót chuột size vừa (35×30, 45×40 cm) và size lớn (80×30, 90×40 cm): PORON, 99G, ZERO, RUSH, TACTILE và lót chuột kính. Liên hệ Sơn Lê 0886 115 561.">
+  <!-- Khung xem trước khi gửi link qua Zalo, Facebook, Messenger. Ảnh phải là địa chỉ đầy đủ:
+       nếu link Netlify không phải studio-ink.netlify.app thì sửa lại dòng og:image -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="STUDIO INK">
+  <meta property="og:locale" content="vi_VN">
+  <meta property="og:title" content="STUDIO INK · Lót chuột size vừa & size lớn">
+  <meta property="og:description" content="Xem mẫu lót chuột 35×30, 45×40, 80×30, 90×40 cm – PORON, 99G, ZERO, RUSH, TACTILE và lót chuột kính. Chọn size, xem giá và đặt hàng online.">
+  <meta property="og:image" content="https://studio-ink.netlify.app/assets/share.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="STUDIO INK – Lót chuột size vừa và size lớn">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="theme-color" content="#ffffff">
+  <!-- trang chỉ có nền sáng: không cho trình duyệt tự làm tối (logo đen sẽ chìm vào nền) -->
+  <meta name="color-scheme" content="only light">
+  <!-- iPhone không tự biến dãy số (giá, số điện thoại khách nhập) thành link; các nút gọi đã có link riêng -->
+  <meta name="format-detection" content="telephone=no">
+  <link rel="icon" href="assets/favicon.png">
+  <link rel="apple-touch-icon" href="assets/logo.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600&amp;family=Newsreader:ital,opsz,wght@0,6..72,400;1,6..72,400&amp;display=swap">
+  <link rel="stylesheet" href="css/style.css">
+  <script src="js/data.js" defer></script>
+  <script src="js/rail.js" defer></script>
+  <script src="js/main.js" defer></script>
+</head>
+<body>
+  <header class="top" id="top">
+    <nav class="top__nav" aria-label="Điều hướng chính">
+      <div class="top__links">
+        <a href="#products">Sản phẩm</a>
+        <a href="#compare">So sánh</a>
+      </div>
+      <h1 class="top__brand">
+        <a class="top__logo" href="#top">
+          <img src="assets/logo-mono.png" alt="STUDIO INK" width="313" height="370">
+        </a>
+      </h1>
+      <div class="top__links top__links--end">
+        <a href="#contact">Liên hệ</a>
+        <a class="top__icon" href="tel:0886115561" aria-label="Gọi 0886 115 561">
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M6.6 3.6h2.5l1.3 4-1.8 1.3a11.2 11.2 0 0 0 6.5 6.5l1.3-1.8 4 1.3v2.5c0 1-.8 1.8-1.8 1.7C10.4 18.6 5.4 13.6 4.9 5.3c-.1-1 .7-1.7 1.7-1.7Z"/></svg>
+        </a>
+      </div>
+    </nav>
+
+    <div class="intro">
+      <p class="kicker" id="railCats">Lót chuột · Size vừa · Size lớn</p>
+    </div>
+
+    <div class="rail" id="rail" tabindex="0" aria-label="Giá treo sản phẩm. Dùng phím mũi tên để chọn mẫu, Enter để xem chi tiết.">
+      <div class="rail__bar" aria-hidden="true"></div>
+      <div class="rail__items" id="railItems"></div>
+    </div>
+
+    <div class="caption">
+      <p class="caption__name" id="railName" aria-live="polite"></p>
+      <p class="caption__meta" id="railMeta"></p>
+      <div class="caption__actions">
+        <button class="round-btn" type="button" id="railPrev" aria-label="Mẫu trước">←</button>
+        <button class="pill" type="button" id="railOpen">Xem chi tiết <span aria-hidden="true">↗</span></button>
+        <button class="round-btn" type="button" id="railNext" aria-label="Mẫu sau">→</button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="section" id="products" aria-labelledby="productsTitle">
+      <div class="wrap">
+        <div class="section__head">
+          <div>
+            <p class="kicker">Danh mục</p>
+            <h2 class="section__title" id="productsTitle">Sản phẩm</h2>
+          </div>
+          <div class="tabs" id="categoryTabs" role="group" aria-label="Chọn danh mục"></div>
+        </div>
+        <div class="catalog__head">
+          <p id="productScope"></p>
+          <p id="productRange" aria-live="polite"></p>
+        </div>
+        <ul class="grid" id="productGrid"></ul>
+        <nav class="pager" id="productPager" aria-label="Chuyển trang sản phẩm"></nav>
+      </div>
+    </section>
+
+    <section class="section" id="compare" aria-labelledby="compareTitle">
+      <div class="wrap">
+        <div class="section__head">
+          <div>
+            <p class="kicker">Dòng pad</p>
+            <h2 class="section__title" id="compareTitle">So sánh nhanh</h2>
+          </div>
+          <p class="section__lead">Năm dòng pad vải, mỗi dòng một bề mặt và một cảm giác riêng. Các dòng pad vải có ở cỡ 45 × 40 cm, dày 5 mm.</p>
+        </div>
+        <div class="table-scroll">
+          <table class="compare" id="compareTable"></table>
+        </div>
+        <!-- điện thoại, iPad dọc: bảng gọn vừa màn hình (không phải vuốt ngang) + chi tiết từng dòng bấm để mở -->
+        <div class="compare-m">
+          <h3 class="compare-m__title">Phong cách chơi</h3>
+          <table class="cmx" id="compareMatrix"></table>
+          <h3 class="compare-m__title">Chi tiết từng dòng</h3>
+          <div class="acc" id="compareDetails"></div>
+        </div>
+        <p class="note">Thang điểm 1–5 thể hiện mức độ của thuộc tính, không phải điểm chất lượng tổng thể. Điểm cao hơn không có nghĩa là tốt hơn, chỉ cho biết dòng pad thiên về hướng đó. Ngoài năm dòng trên, shop có lót chuột kính (mặt kính cường lực) ở mọi kích thước; thông số đang được cập nhật.</p>
+      </div>
+    </section>
+
+    <section class="section" id="contact" aria-labelledby="contactTitle">
+      <div class="wrap contact">
+        <div>
+          <p class="kicker">Đặt hàng</p>
+          <h2 class="section__title" id="contactTitle">Liên hệ</h2>
+          <ol class="steps">
+            <li><strong>Chọn mẫu</strong><span>Lướt giá treo hoặc danh sách sản phẩm, bấm vào mẫu bạn thích.</span></li>
+            <li><strong>Chọn kích thước và dòng pad</strong><span>Size vừa: 35 × 30 cm (pad kính) hoặc 45 × 40 cm (đủ 6 dòng pad). Size lớn: 80 × 30 hoặc 90 × 40 cm (pad kính).</span></li>
+            <li><strong>Đặt hàng</strong><span>Bấm “Đặt hàng”, điền tên, số điện thoại và địa chỉ nhận hàng. Shop sẽ gọi lại để xác nhận.</span></li>
+          </ol>
+        </div>
+        <div class="contact__card">
+          <a class="contact__phone" href="tel:0886115561">0886 115 561</a>
+          <p class="contact__who">Sơn Lê — STUDIO INK</p>
+          <div class="contact__links">
+            <a class="pill pill--solid" href="tel:0886115561">Gọi ngay</a>
+            <a class="pill" href="https://zalo.me/0886115561" target="_blank" rel="noopener">Zalo</a>
+            <a class="pill" href="https://www.facebook.com/groups/262754227836556/user/61553708279615/" target="_blank" rel="noopener">Facebook</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="wrap">
+      <p>© <span id="year">2026</span> STUDIO INK</p>
+      <p><a href="tel:0886115561">Sơn Lê · 0886 115 561</a> · <a href="https://www.facebook.com/groups/262754227836556/user/61553708279615/" target="_blank" rel="noopener">Facebook</a></p>
+    </div>
+  </footer>
+
+  <div class="sheet" id="detail" role="dialog" aria-modal="true" aria-labelledby="detailTitle" hidden>
+    <div class="sheet__panel" id="detailPanel">
+      <div class="sheet__bar">
+        <img class="sheet__logo" src="assets/logo-mono.png" alt="" width="313" height="370">
+        <span class="sheet__count" id="detailCount"></span>
+        <button class="sheet__close" type="button" data-close>Đóng <span aria-hidden="true">✕</span></button>
+        <p class="sheet__hint" id="detailHint" aria-hidden="true">← Vuốt ngang để đóng →</p>
+      </div>
+      <div class="detail">
+        <div class="detail__media">
+          <div class="detail__frame">
+            <img id="detailImg" alt="" draggable="false">
+            <button class="frame-arrow frame-arrow--prev" type="button" id="detailPrev" aria-label="Mẫu trước">←</button>
+            <button class="frame-arrow frame-arrow--next" type="button" id="detailNext" aria-label="Mẫu sau">→</button>
+          </div>
+          <div class="surface">
+            <span class="surface__swatch" id="detailSwatch" aria-hidden="true"></span>
+            <dl class="surface__info">
+              <div><dt>Bề mặt</dt><dd id="detailSurfaceName"></dd></div>
+              <div><dt>Loại đế</dt><dd id="detailBase"></dd></div>
+            </dl>
+          </div>
+        </div>
+        <div class="detail__info">
+          <p class="kicker" id="detailKicker"></p>
+          <h2 class="detail__title" id="detailTitle"></h2>
+          <p class="detail__price" id="detailPrice"></p>
+          <fieldset class="choices">
+            <legend>Kích thước</legend>
+            <div class="choices__grid choices__grid--2" id="detailSizes"></div>
+          </fieldset>
+          <fieldset class="choices">
+            <legend>Dòng pad</legend>
+            <div class="choices__grid" id="detailLines"></div>
+          </fieldset>
+          <div class="qty" id="detailQtyBox">
+            <label class="qty__label" for="detailQty">Số lượng</label>
+            <div class="qty__control">
+              <button type="button" data-qty="-1" aria-label="Bớt một cái">−</button>
+              <input id="detailQty" type="number" inputmode="numeric" min="1" max="20" value="1">
+              <button type="button" data-qty="1" aria-label="Thêm một cái">+</button>
+            </div>
+          </div>
+          <div class="detail__summary" id="detailSummary"></div>
+          <dl class="specs" id="detailSpecs"></dl>
+          <p class="detail__help">Cần tư vấn? <a href="tel:0886115561">Gọi 0886 115 561</a> · <a href="https://zalo.me/0886115561" target="_blank" rel="noopener">Nhắn Zalo</a> · <a href="https://www.facebook.com/groups/262754227836556/user/61553708279615/" target="_blank" rel="noopener">Facebook</a></p>
+          <button class="text-btn detail__copy" type="button" id="detailCopy">Sao chép mã đặt hàng</button>
+        </div>
+      </div>
+      <!-- luôn nằm ở đáy màn hình: tổng tiền + nút đặt hàng -->
+      <div class="buybar">
+        <p class="buybar__sum"><strong id="detailTotal"></strong><span id="detailPick"></span></p>
+        <button class="pill pill--solid buybar__btn" type="button" id="detailOrder">Đặt hàng</button>
+      </div>
+    </div>
+  </div>
+
+  <dialog class="order" id="order" aria-labelledby="orderTitle">
+    <form class="order__form" id="orderForm" novalidate>
+      <div class="order__bar">
+        <p class="kicker">Đặt hàng</p>
+        <button class="sheet__close" type="button" data-order-close>Đóng <span aria-hidden="true">✕</span></button>
+      </div>
+      <h2 class="order__title" id="orderTitle"></h2>
+      <p class="order__summary" id="orderSummary"></p>
+      <p class="order__total"><span>Thành tiền</span> <strong id="orderTotal"></strong></p>
+
+      <div class="field">
+        <label for="orderName">Tên người nhận</label>
+        <input id="orderName" name="name" autocomplete="name" maxlength="80" required autofocus aria-describedby="orderNameError">
+        <p class="field__error" id="orderNameError"></p>
+      </div>
+      <div class="field">
+        <label for="orderPhone">Số điện thoại</label>
+        <input id="orderPhone" name="phone" type="tel" inputmode="tel" autocomplete="tel" maxlength="20" required aria-describedby="orderPhoneError">
+        <p class="field__error" id="orderPhoneError"></p>
+      </div>
+      <div class="field">
+        <label for="orderEmail">Gmail <span>(không bắt buộc)</span></label>
+        <input id="orderEmail" name="email" type="email" inputmode="email" autocomplete="email" maxlength="120" aria-describedby="orderEmailError">
+        <p class="field__error" id="orderEmailError"></p>
+      </div>
+      <div class="field">
+        <label for="orderAddress">Địa chỉ nhận hàng</label>
+        <textarea id="orderAddress" name="address" rows="3" autocomplete="street-address" maxlength="300" required aria-describedby="orderAddressError"></textarea>
+        <p class="field__error" id="orderAddressError"></p>
+      </div>
+      <!-- ô bẫy chống thư rác: người dùng không thấy, máy tự động điền thì đơn bị bỏ qua -->
+      <input class="order__honey" name="_honey" tabindex="-1" autocomplete="off" aria-hidden="true">
+
+      <button class="pill pill--solid order__submit" type="submit" id="orderSubmit">Xác nhận đặt hàng</button>
+      <p class="order__status" id="orderStatus" role="alert"></p>
+      <p class="order__note">Thông tin chỉ dùng để giao hàng. Shop sẽ gọi lại để xác nhận đơn.</p>
+    </form>
+    <div class="order__done" id="orderDone" hidden>
+      <div class="order__bar">
+        <p class="kicker">Đã gửi đơn hàng</p>
+        <button class="sheet__close" type="button" data-order-close>Đóng <span aria-hidden="true">✕</span></button>
+      </div>
+      <h2 class="order__title" id="orderDoneTitle" tabindex="-1">Cảm ơn bạn!</h2>
+      <p class="order__summary" id="orderDoneText"></p>
+      <button class="pill pill--solid order__submit" type="button" data-order-close>Xong</button>
+    </div>
+  </dialog>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+</body>
+</html>
