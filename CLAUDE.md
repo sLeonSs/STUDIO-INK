@@ -87,7 +87,7 @@ The owner deploys by dragging a folder or zip into Netlify (manual deploy, no Gi
 - **`404.html`:** uses root-absolute paths (`/assets/...`), because Netlify serves it at any missing path.
 - **Link previews (Zalo/Facebook):** the `og:*` tags in `index.html` point `og:image` at the absolute URL `https://studio-ink.netlify.app/assets/share.jpg`, which assumes the Netlify site name `studio-ink`. Update it if the site gets another name or a custom domain. `assets/share.jpg` (1200×630) is text only ("STUDIO INK", sizes, phone), without the old SK logo, rendered from HTML with headless Chrome, so it does not depend on the placeholder product photos.
 
-- **Git:** the project is a local git repo on `main` with no remote yet. The intended home is the owner's GitHub account `sLeonSs`, whose empty public repo `SK_Decor` exists; the machine has no `gh` and no GitHub credentials. GitHub Pages is not a host option, because its terms forbid shop/e-commerce sites; GitHub only stores the code, and Netlify hosts the site.
+- **Git:** the code lives at https://github.com/sLeonSs/STUDIO-INK (public, branch `main`, remote `origin`); the older empty repo `SK_Decor` is unused. The Mac has no permanent GitHub login: pushes were made with a GitHub CLI downloaded into a session scratchpad and a device-code login, so a new session must log in again before pushing. GitHub Pages is not a host option, because its terms forbid shop/e-commerce sites; GitHub only stores the code, and Netlify hosts the site.
 
 ## Assets
 
